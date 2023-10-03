@@ -1,0 +1,52 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base",
+        ":dependencyDashboard"
+    ],
+    "postUpdateOptions": [
+        "gomodTidy"
+    ],
+    "docker": {
+        "enabled": false
+    },
+    "docker-compose": {
+        "enabled": false
+    },
+    "labels": [
+        "renovate"
+    ],
+    "prBodyNotes": [
+        "{{#if isMajor}}:warning: MAJOR MAJOR MAJOR :warning:{{/if}}"
+    ],
+    "commitMessagePrefix": "chore: ",
+    "major": {
+        "dependencyDashboardApproval": true
+    },
+    "packageRules": [
+        {
+            "description": "Automatically group and merge minor and patch-level updates",
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "digest"
+            ],
+            "matchManagers": [
+                "gomod"
+            ],
+            "stabilityDays": 3,
+            "groupName": "all non-major dependencies",
+            "groupSlug": "all-minor-patch"
+        },
+        {
+            "description": "Opt-out minimum Go version updates: https://github.com/renovatebot/renovate/issues/16715",
+            "matchDatasources": [
+                "golang-version"
+            ],
+            "enabled": false
+        }
+    ]
+}
